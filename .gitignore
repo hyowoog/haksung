@@ -1,0 +1,20 @@
+.DS_Store
+.env
+/node_modules/
+*.tsbuildinfo
+
+# React Router
+/.react-router/
+/build/
+
+# Cloudflare
+.mf
+.wrangler
+.dev.vars*
+worker-configuration.d.ts
+
+!.dev.vars.example
+!.env.example
+
+# 레거시 PHP. 데이터베이스 비밀번호가 포함되어 있어 저장소에 넣지 않는다.
+/public_html/

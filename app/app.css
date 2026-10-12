@@ -1,0 +1,25 @@
+@import "tailwindcss" source(".");
+
+@theme {
+	--font-sans: "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+	--font-serif: "Noto Serif KR", ui-serif, serif;
+	--color-brand: #004276;
+	--color-brand-dark: #03284a;
+	--color-brand-soft: #e7f0f8;
+	--color-paper: #f6f8f3;
+	--color-ink: #1f2933;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--font-sans);
+	background: var(--color-paper);
+	color: var(--color-ink);
+}
+
+.font-serif {
+	font-family: var(--font-serif);
+}
