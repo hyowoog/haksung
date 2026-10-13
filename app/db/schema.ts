@@ -66,6 +66,22 @@ export const comments = sqliteTable(
 	(table) => [index("comments_post_idx").on(table.postId)],
 );
 
+/** 연도별 후원금현황 이미지. 원본은 R2(stats/연도/...)에 둔다. */
+export const donationStats = sqliteTable(
+	"donation_stats",
+	{
+		id: integer("id").primaryKey({ autoIncrement: true }),
+		year: integer("year").notNull(),
+		r2Key: text("r2_key").notNull(),
+		originalName: text("original_name").notNull(),
+		contentType: text("content_type").notNull(),
+		size: integer("size").notNull(),
+		sortOrder: integer("sort_order").notNull().default(0),
+		createdAt: text("created_at").notNull(),
+	},
+	(table) => [index("donation_stats_year_idx").on(table.year, table.sortOrder)],
+);
+
 export const donors = sqliteTable("donors", {
 	id: integer("id").primaryKey({ autoIncrement: true }),
 	name: text("name").notNull(),

@@ -36,18 +36,28 @@ export async function destroySession(session: Awaited<ReturnType<typeof readSess
 	return storage().destroySession(session);
 }
 
-/** 로그인하지 않았으면 관리자 로그인으로 보낸다. */
-export async function requireMember(request: Request) {
+/** 세션의 회원을 조회한다. 쿠키만 남고 계정이 삭제됐으면 member는 null이다. */
+export async function getMember(request: Request) {
 	const session = await readSession(request);
 	const memberId = session.get("memberId");
-	if (!memberId) throw redirect("/admin/login");
+	if (!memberId) return { member: null, session };
 
 	const [member] = await getDb()
 		.select()
 		.from(members)
 		.where(eq(members.id, memberId))
 		.limit(1);
+	return { member: member ?? null, session };
+}
 
-	if (!member) throw redirect("/admin/login");
+/** 로그인하지 않았으면 관리자 로그인으로 보낸다. */
+export async function requireMember(request: Request) {
+	const { member, session } = await getMember(request);
+	if (!member) {
+		// 삭제된 계정의 쿠키가 남아 로그인 페이지와 리다이렉트를 반복하지 않도록 비운다
+		throw redirect("/admin/login", {
+			headers: session.get("memberId") ? { "Set-Cookie": await destroySession(session) } : undefined,
+		});
+	}
 	return { member, session };
 }

@@ -39,7 +39,7 @@ export default function BoardList({ loaderData }: Route.ComponentProps) {
 						const image = files.find((file) => file.postId === post.id && isImageType(file.contentType));
 						return (
 							<Link key={post.id} to={`/board/${board.slug}/${post.id}`} className="group">
-								<div className="aspect-[4/3] overflow-hidden rounded border border-slate-200 bg-slate-100">
+								<div className="aspect-4/3 overflow-hidden rounded border border-slate-200 bg-slate-100">
 									{image ? (
 										<img
 											src={`/files/${image.r2Key}`}
@@ -58,7 +58,7 @@ export default function BoardList({ loaderData }: Route.ComponentProps) {
 				</div>
 			) : (
 				<div className="overflow-x-auto">
-					<table className="w-full min-w-[560px] border-collapse text-sm">
+					<table className="w-full min-w-140 border-collapse text-sm">
 						<thead>
 							<tr className="border-y border-slate-300 bg-slate-50 text-slate-600">
 								<th className="px-3 py-2 text-left font-medium">제목</th>

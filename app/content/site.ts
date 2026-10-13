@@ -1,3 +1,5 @@
+import type { MenuIconName } from "../components/menu-icon";
+
 export const foundation = {
 	name: "재단법인 학성장학회",
 	shortName: "학성장학회",
@@ -14,6 +16,7 @@ export const foundation = {
 export interface MenuItem {
 	label: string;
 	href: string;
+	icon?: MenuIconName;
 }
 
 export interface MenuGroup {
@@ -29,9 +32,9 @@ export const menus: MenuGroup[] = [
 		label: "장학재단소개",
 		href: "/about/greeting",
 		items: [
-			{ label: "인사말", href: "/about/greeting" },
-			{ label: "재단연혁", href: "/about/history" },
-			{ label: "임원소개", href: "/about/directors" },
+			{ label: "인사말", href: "/about/greeting", icon: "IconHeartHandshake"},
+			{ label: "재단연혁", href: "/about/history", icon: "IconCalendar"},
+			{ label: "임원소개", href: "/about/directors", icon: "IconUsers"},
 		],
 	},
 	{
@@ -50,7 +53,7 @@ export const menus: MenuGroup[] = [
 		items: [
 			{ label: "후원참여안내", href: "/support" },
 			{ label: "후원하신분들", href: "/support/donors" },
-			{ label: "후원금현황", href: "/support/stats" },
+			{ label: "후원금공시", href: "/support/stats" },
 		],
 	},
 	{

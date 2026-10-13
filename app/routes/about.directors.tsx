@@ -11,7 +11,7 @@ export default function Directors() {
 	return (
 		<Subpage section="about" title="임원소개">
 			<div className="overflow-x-auto">
-				<table className="w-full min-w-[520px] border-collapse text-sm">
+				<table className="w-full min-w-130 border-collapse text-sm">
 					<thead>
 						<tr className="bg-slate-500 text-white">
 							<th className="w-1/4 px-3 py-2 font-medium">직위</th>

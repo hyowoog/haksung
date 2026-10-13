@@ -21,5 +21,6 @@ export default [
 		route("admin/posts/new", "routes/admin.post-new.tsx"),
 		route("admin/posts/:id", "routes/admin.post-edit.tsx"),
 		route("admin/donors", "routes/admin.donors.tsx"),
+		route("admin/stats", "routes/admin.stats.tsx"),
 	]),
 ] satisfies RouteConfig;

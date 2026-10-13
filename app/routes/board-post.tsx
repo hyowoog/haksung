@@ -60,7 +60,7 @@ export default function BoardPost({ loaderData, actionData }: Route.ComponentPro
 					{files.map((file) => (
 						<li key={file.id}>
 							{isImageType(file.contentType) ? (
-								<img src={`/files/${file.r2Key}`} alt={file.originalName} className="max-h-[480px] rounded border" />
+								<img src={`/files/${file.r2Key}`} alt={file.originalName} className="max-h-120 rounded border" />
 							) : null}
 							<a href={`/files/${file.r2Key}`} className="mt-1 inline-block text-brand">
 								{file.originalName} ({formatBytes(file.size)})

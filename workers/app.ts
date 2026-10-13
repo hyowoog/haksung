@@ -7,9 +7,9 @@ const requestHandler = createRequestHandler(
 	import.meta.env.MODE,
 );
 
-/** 게시글 첨부는 React 문서 응답으로 감싸지 않고 R2 본문을 그대로 보낸다. */
+/** 게시글 첨부·후원금현황 이미지는 React 문서 응답으로 감싸지 않고 R2 본문을 그대로 보낸다. */
 async function serveObject(env: Env, key: string) {
-	if (!key.startsWith("posts/")) {
+	if (!key.startsWith("posts/") && !key.startsWith("stats/")) {
 		return new Response("파일을 찾을 수 없습니다.", { status: 404 });
 	}
 

@@ -16,15 +16,13 @@ npm run dev
 ## 데이터
 
 - D1 바인딩 `DB`: 게시판, 댓글, 후원자, 관리자
-- R2 바인딩 `MY_BUCKET`: 게시글 첨부파일
+- R2 바인딩 `MY_BUCKET`: 게시글 첨부파일, 후원금현황 이미지(`stats/연도/`)
 
-배포 전에 원격 데이터베이스와 버킷을 만들고 `wrangler.jsonc`의 `database_id`를 실제 값으로 바꾼 뒤, 세션 키를 시크릿으로 넣습니다.
+원격 D1(`haksung`)과 R2 버킷(`haksung`)은 만들어 두었고 `wrangler.jsonc`에 연결돼 있습니다. 로컬 개발 DB는 `preview_database_id`로 기존 로컬 데이터를 그대로 씁니다.
 
 ```bash
-npx wrangler d1 create haksung
-npx wrangler r2 bucket create haksung
-npx wrangler d1 migrations apply DB --remote
-npx wrangler d1 execute DB --remote --file=./seed.sql
-npx wrangler secret put SESSION_SECRET
+npm run db:migrate:remote   # 새 마이그레이션이 생길 때마다
+npm run db:seed:remote      # 게시판 기본 데이터 (중복 실행해도 안전)
+npx wrangler secret put SESSION_SECRET   # 최초 배포 전 1회, 32자 이상 임의 문자열
 npm run deploy
 ```

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 
 import { foundation, menus } from "../content/site";
+import { Button } from "./ui/button";
 
-export function Header() {
+export function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const location = useLocation();
 
@@ -16,7 +17,7 @@ export function Header() {
 			<div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
 				<Link to="/" className="flex items-center gap-2 text-brand">
 					<img src="/images/logo.png" alt="" className="h-8 w-auto" />
-					<span className="font-serif text-lg font-semibold tracking-tight md:text-xl">
+					<span className="font-serif text-lg font-bold tracking-tight md:text-xl">
 						{foundation.name}
 					</span>
 				</Link>
@@ -53,6 +54,10 @@ export function Header() {
 							</div>
 						</div>
 					))}
+					
+					<Button asChild variant="ghost" size="sm">
+						{isLoggedIn ? <Link to="/admin">관리자모드</Link> : <Link to="/admin/login">로그인</Link>}
+					</Button>
 				</nav>
 			</div>
 			{isOpen ? (

@@ -20,6 +20,7 @@ export default function AdminLayout({ loaderData }: Route.ComponentProps) {
 					<nav className="flex items-center gap-4 text-sm">
 						<Link to="/admin">글</Link>
 						<Link to="/admin/donors">후원자</Link>
+						<Link to="/admin/stats">후원금현황</Link>
 						<Link to="/">사이트로</Link>
 						<Form method="post" action="/admin/logout">
 							<button type="submit" className="text-slate-500">

@@ -1,5 +1,5 @@
 import { count, eq } from "drizzle-orm";
-import { Form, redirect } from "react-router";
+import { Form, data, redirect } from "react-router";
 
 import type { Route } from "./+types/admin.login";
 import { foundation } from "../content/site";
@@ -7,17 +7,23 @@ import { getDb } from "../db/client.server";
 import { members } from "../db/schema";
 import { pageMeta } from "../lib/format";
 import { hashPassword, verifyPassword } from "../lib/password.server";
-import { commitSession, readSession } from "../lib/session.server";
+import { commitSession, destroySession, getMember, readSession } from "../lib/session.server";
 
 export function meta({}: Route.MetaArgs) {
 	return pageMeta("관리자");
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const session = await readSession(request);
-	if (session.get("memberId")) throw redirect("/admin");
+	const { member, session } = await getMember(request);
+	if (member) throw redirect("/admin");
+
 	const [{ total }] = await getDb().select({ total: count() }).from(members);
-	return { needsSetup: Number(total) === 0 };
+	const result = { needsSetup: Number(total) === 0 };
+	// 삭제된 계정의 쿠키가 남아 있으면 지운다
+	if (session.get("memberId")) {
+		return data(result, { headers: { "Set-Cookie": await destroySession(session) } });
+	}
+	return result;
 }
 
 export async function action({ request }: Route.ActionArgs) {

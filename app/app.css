@@ -1,13 +1,28 @@
-@import "tailwindcss" source(".");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@import "tailwindcss";
 
 @theme {
-	--font-sans: "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui, sans-serif;
+	/* 본명조(Source Han Serif) 우선, 미설치 환경은 동일 글리프인 Noto Serif KR 웹폰트로 대체 */
 	--font-serif: "Noto Serif KR", ui-serif, serif;
 	--color-brand: #004276;
 	--color-brand-dark: #03284a;
 	--color-brand-soft: #e7f0f8;
 	--color-paper: #f6f8f3;
 	--color-ink: #1f2933;
+	--color-card: #ffffff;
+	--color-card-foreground: #eee;
+	--color-border: #e2e8f0;
+	--color-background: #ffffff;
+	--color-foreground: #1f2933;
+	--color-primary: #004276;
+	--color-primary-foreground: #ffffff;
+	--color-secondary: #e7f0f8;
+	--color-secondary-foreground: #004276;
+	--color-accent: #e7f0f8;
+	--color-accent-foreground: #004276;
+	--color-destructive: #dc2626;
+	--color-ring: #004276;
 }
 
 html {

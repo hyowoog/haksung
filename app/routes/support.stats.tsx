@@ -1,46 +1,46 @@
-import { Link, useSearchParams } from "react-router";
+import { Link } from "react-router";
 
 import type { Route } from "./+types/support.stats";
 import { Subpage } from "../components/subpage";
 import { pageMeta } from "../lib/format";
+import { loadStatsPage } from "../lib/stats.server";
 
 export function meta({}: Route.MetaArgs) {
 	return pageMeta("후원금현황", "재단법인 학성장학회 후원금 현황입니다.");
 }
 
-const years = [
-	{ id: "2020", label: "2020년도" },
-	{ id: "2019", label: "2019년도" },
-];
+export async function loader({ request }: Route.LoaderArgs) {
+	const requested = Number(new URL(request.url).searchParams.get("year"));
+	return loadStatsPage(Number.isInteger(requested) ? requested : null);
+}
 
-export default function Stats() {
-	const [params] = useSearchParams();
-	const year = params.get("year") === "2019" ? "2019" : "2020";
+export default function Stats({ loaderData }: Route.ComponentProps) {
+	const { years, year, images, html } = loaderData;
 
 	return (
-		<Subpage section="support" title="후원금현황">
-			<div className="mb-4 flex border border-slate-200 bg-slate-100">
-				{years.map((item) => (
+		<Subpage section="support" title="후원금 공시">
+			<div className="mb-4 flex flex-wrap border border-slate-200 bg-slate-100">
+				{years.map((item, index) => (
 					<Link
-						key={item.id}
-						to={item.id === "2020" ? "/support/stats" : "/support/stats?year=2019"}
-						className={`px-4 py-3 text-sm ${year === item.id ? "bg-slate-300 font-medium" : "hover:bg-slate-200"}`}
+						key={item}
+						to={index === 0 ? "/support/stats" : `/support/stats?year=${item}`}
+						preventScrollReset
+						className={`px-4 py-3 text-sm ${year === item ? "bg-slate-300 font-medium" : "hover:bg-slate-200"}`}
 					>
-						{item.label}
+						{item}년도
 					</Link>
 				))}
 			</div>
-			{year === "2019" ? (
+			{html ? (
+				<iframe title={`${year}년 후원금 현황`} src={html} className="h-215 w-full border border-slate-200 bg-white" />
+			) : images.length > 0 ? (
 				<div className="space-y-4">
-					<img src="/images/2019-1.png" alt="2019년 후원금 현황 1" className="w-full border border-slate-200" />
-					<img src="/images/2019-2.png" alt="2019년 후원금 현황 2" className="w-full border border-slate-200" />
+					{images.map((image) => (
+						<img key={image.id} src={image.src} alt={image.alt} className="w-full border border-slate-200" />
+					))}
 				</div>
 			) : (
-				<iframe
-					title="2020년 후원금 현황"
-					src="/stats/2020.html"
-					className="h-[860px] w-full border border-slate-200 bg-white"
-				/>
+				<p className="py-12 text-center text-sm text-slate-500">등록된 후원금 현황이 없습니다.</p>
 			)}
 		</Subpage>
 	);
